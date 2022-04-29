@@ -1,0 +1,242 @@
+/*
+Background: #96ceb4 (light green)
+Header: #588c7e (dull green)
+Text: #ffffff (white)
+Links: #f7786b (dark pink)
+Selected Link: #f7cac9 (light pink)
+Form Button: #b8a9c9 (lilac)
+*/
+
+/* CSS VARIABLES */
+:root {
+  --white: #ffffff;
+  --lilac: #b8a9c9;
+  --dark-green: #357b70;
+  --dull-green: #588c7e;
+  --light-green: #96ceb4;
+  --dark-pink: #f7786b;
+  --light-pink: #f7cac9;
+  --primary-font-weight: 400;
+  --primary-font-size: 30px;
+  --primary-line-height: 1.5;
+  --secondary-font-size: 24px;
+  --secondary-line-height: 1.0;
+}
+
+body {
+  background-color: var(--light-green) ;
+  color: var(--white);
+  font-family: 'Caveat', cursive;
+  font-weight: var(--primary-font-weight);
+  font-size: var(--primary-font-size);
+  line-height: var(--primary-line-height);
+}
+
+header, footer {
+  font-size: var(--secondary-font-size);
+  line-height: var(--secondary-line-height);
+}
+
+h1 {
+  color: var(--dull-green);
+}
+
+a, a:visited {
+  color: var(--dark-pink);
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  color: var(--light-pink);
+}
+
+/* changes contact form submit button */
+input[type=submit] {
+  background-color: var(--lilac);
+  color: var(--white);
+  padding: 15px 30px;
+  text-decoration: none;
+}
+
+input[type=submit]:hover {
+	opacity:  0.8; /* reduces the opacity of the button to 80% */
+  cursor: pointer;
+}
+
+main {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.profile__portrait {
+  float: left;
+  width: 250px;
+  margin-right: 40px;
+  border-radius: 50%; /* This rounds each edge to 50% of the element’s original width or height */
+}
+
+.page-header {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+}
+
+.page-header__item {
+  flex: 0 1 200px;
+}
+
+.page-header__item:last-child { /* uses the pseudo selector :last-child */
+  flex-grow: 1;
+  text-align: right;
+}
+
+.navigation-list {
+  list-style-type: none;
+}
+
+.navigation-list li {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+/* order of grid declarations is important as it looks up further the CSS file that it recognises */
+
+/* start grid fallback */
+.grid__item {
+ display: inline-block;
+ width: 33%;
+}
+/* end grid fallback */
+
+@supports (display: grid) { /* grid feature detection like a media query (@supports rule) */
+ .grid {
+   display: grid;
+   /* grid-template-columns: 300px 300px 300px; fractions are better than pixels - they are responsive */
+   grid-template-columns: 1fr 1fr 1fr;
+   grid-gap: 20px;
+   margin: 0;
+   font-size: var(--secondary-font-size);
+ }
+
+ .grid__item {
+   background-color: lightgray;
+   width: auto; /* ensures the modern grid can be used */
+   min-height: auto;
+   margin: 0;
+ }
+
+ .grid__item:last-child {
+   grid-column: 3 / 3; /* short-form of saying it should be in the third column, start in the first row and end at the beginning of the third row */
+   grid-row: 1 / 3; /* alternative to grid-row-start or grid-row-end */
+ }
+}
+
+.page-footer {
+  clear: both;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+@media all and (max-width: 500px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media all and (min-width: 500px) and (max-width: 750px){
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media all and (max-width: 750px) { /* shared code */
+  .grid {
+    grid-gap: 10px;
+  }
+  .grid__item:last-child {
+    grid-column: auto / auto;
+    grid-row: auto / auto;
+  }
+  h1 {
+    font-size: 22px;
+  }
+}
+
+.button, button {
+  /* overwrites browser defaults */
+  /* resets the border */
+  border: none;
+  display: inline-block;
+  /* takes the font from the outer container */
+  font-family: inherit;
+  /* style button */
+  background-color: var(--dark-green);
+  color: var(--white);
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 3px;
+  /* width of the border, type, color */
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  transition: 0.2s opacity;
+}
+
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+button:visited,
+.button:visited {
+  color: white;
+  text-decoration: none;
+}
+
+/* animation on about page involves specifying keyframes and the type of animation */
+
+@keyframes color-change {
+  0% {
+    fill: #edc655;
+  }
+  50% {
+    fill: #fcffad;
+  }
+  100% {
+    fill: #f76414;
+  }
+}
+
+.sun {
+  animation: 4s color-change infinite alternate linear;
+}
+
+@keyframes cloud-move {
+  from {
+    transform: translate(0, 50px);
+  }
+  to {
+    transform: translate(200px, 50px);
+  }
+}
+
+.cloud-front {
+  animation: 30s cloud-move infinite alternate linear;
+}
+
+@keyframes cloud-move-reverse {
+  from {
+    transform: translate(446px, 48px);
+  }
+  to {
+    transform: translate(100px, 48px);
+  }
+}
+
+.cloud-back {
+  animation: 34s cloud-move-reverse infinite alternate linear;
+}
